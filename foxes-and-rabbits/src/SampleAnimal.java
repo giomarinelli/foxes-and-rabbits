@@ -4,15 +4,15 @@ import java.util.Random;
 
 public class SampleAnimal extends Animal {
     
-    // Characteristics shared by all foxes (class variables).
+   
     
-    // Zombies do not breed, they infect. Thus, breeding age is set to 0.
+    
     private static final int BREEDING_AGE = 0;
-    // The age to which a Zombie can live, they do not die, but eventually decompose.
-    private static final int MAX_AGE = 2147483647;
-    // Zombies will always successfully infect prey.
-    private static final double BREEDING_PROBABILITY = 1;
-    // Zombies can infect one animal at a time.
+    
+    private static final int MAX_AGE = 0; //
+    
+    private static final double BREEDING_PROBABILITY = 0;
+   
     private static final int MAX_LITTER_SIZE = 1;
 
     private int willMove = 3;
@@ -26,8 +26,14 @@ public class SampleAnimal extends Animal {
 
     @Override
     public void act(List<Animal> newAnimals) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'act'");
+        if (getLocation().getRow() < 79){
+            setLocation(new Location(getLocation().getRow() + 1, getLocation().getCol()));
+        }
+        else{
+            setLocation(new Location(0,getLocation().getCol()));
+        }
+
+        
     }
 
     @Override
