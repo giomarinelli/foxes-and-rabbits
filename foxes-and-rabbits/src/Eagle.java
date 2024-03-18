@@ -1,6 +1,7 @@
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class Eagle extends Animal{
 
@@ -9,6 +10,8 @@ public class Eagle extends Animal{
     private static final double BREEDING_PROBABILITY = 0.08;
     private static final int MAX_LITTER_SIZE = 5;
     private static final int EAGLE_FOOD_VALUE = 25;
+
+    private static final Random rand = Randomizer.getRandom();
 
     private int direction = 1;
     private int swoopCountdown = 9;
@@ -20,7 +23,8 @@ public class Eagle extends Animal{
         super(field, new Location(0, xLocation));
     }
 
-    public void poopoo(){
+    @Override
+    public void act(List<Animal> newAnimals) {
         super.incrementAge();
         hunger++;
 
@@ -30,6 +34,7 @@ public class Eagle extends Animal{
         }
 
         if(isAlive()) {
+            giveBirth(newAnimals);
             swoopCountdown--;
             if (swoopCountdown <= 0){
                 //Do swoop
@@ -60,15 +65,6 @@ public class Eagle extends Animal{
         }
     }
 
-    @Override
-    public void act(List<Animal> newAnimals) {
-        Location loc = getLocation();
-        poopoo();
-        if (loc.equals(getLocation())){
-            System.out.println("ERROR EAGLE STUCKY WUCKY");
-        }
-    }
-
     private Location findFood()
     {
         int currentCol = getLocation().getCol();
@@ -89,6 +85,19 @@ public class Eagle extends Animal{
             }
         }
         return null;
+    }
+
+    private void giveBirth(List<Animal> newAnimals){
+        if (getAge() >= BREEDING_AGE){
+            if (rand.nextDouble() <= BREEDING_PROBABILITY){
+                int numOfYoung = rand.nextInt(MAX_LITTER_SIZE + 1);
+                for (int i = 0; i < numOfYoung; i++){
+                    int col = getLocation().getCol() + (rand.nextInt(5) - 3);
+                    col = Math.max(Math.min(col, getField().getWidth() - 1), 0);
+                    newAnimals.add(new Eagle(getField(), col));
+                }
+            }
+        }
     }
 
     @Override
