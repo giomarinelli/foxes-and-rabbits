@@ -3,10 +3,6 @@ import java.util.List;
 import java.util.Random;
 
 public class SampleAnimal extends Animal {
-    
-   
-    
-    
     private static final int BREEDING_AGE = 0;
     
     private static final int MAX_AGE = 0; //
