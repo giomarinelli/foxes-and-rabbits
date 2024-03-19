@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.List;
 import java.util.Random;
 
@@ -22,6 +23,8 @@ public class Rabbit extends Animal
     private static final int MAX_LITTER_SIZE = 4;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
+
+    private static final double RABBIT_CREATION_PROBABILITY = 0.08;
     
     // Individual characteristics (instance fields).
     
@@ -37,8 +40,8 @@ public class Rabbit extends Animal
      */
     public Rabbit(boolean randomAge, Field field, Location location)
     {
-        super(field, location);
-         super.setAge(0);
+        super(field, location, Color.orange, RABBIT_CREATION_PROBABILITY);
+        super.setAge(0);
         if(randomAge) {
             super.setAge(rand.nextInt(MAX_AGE));
         }
@@ -65,14 +68,6 @@ public class Rabbit extends Animal
             }
         }
     }
-
-
-    public Animal makeAnimal(boolean randAge, Field field, Location location){
-        Animal rabbit = new Rabbit(randAge, field, location);
-        return rabbit;
-    }
-        
-
 
     /**
      *  Return the breeding age of this animal. 
@@ -106,9 +101,8 @@ public class Rabbit extends Animal
         return MAX_LITTER_SIZE;
     }
 
-    @Override
-    public double getCreationProbability()
-    {
-        return 0.018;
+    public Animal makeAnimal(boolean randAge, Field field, Location location){
+        Animal rabbit = new Rabbit(randAge, field, location);
+        return rabbit;
     }
 }
