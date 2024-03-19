@@ -19,8 +19,8 @@ public class Eagle extends Animal{
 
     private boolean isSwooped = false;
 
-    public Eagle(Field field, int xLocation){
-        super(field, new Location(0, xLocation));
+    public Eagle(boolean randomAge, Field field, Location location){
+        super(field, location);
     }
 
     @Override
@@ -87,17 +87,22 @@ public class Eagle extends Animal{
         return null;
     }
 
-    private void giveBirth(List<Animal> newAnimals){
-        if (getAge() >= BREEDING_AGE){
-            if (rand.nextDouble() <= BREEDING_PROBABILITY){
-                int numOfYoung = rand.nextInt(MAX_LITTER_SIZE + 1);
-                for (int i = 0; i < numOfYoung; i++){
-                    int col = getLocation().getCol() + (rand.nextInt(5) - 3);
-                    col = Math.max(Math.min(col, getField().getWidth() - 1), 0);
-                    newAnimals.add(new Eagle(getField(), col));
-                }
-            }
-        }
+    // private void giveBirth(List<Animal> newAnimals){
+    //     if (getAge() >= BREEDING_AGE){
+    //         if (rand.nextDouble() <= BREEDING_PROBABILITY){
+    //             int numOfYoung = rand.nextInt(MAX_LITTER_SIZE + 1);
+    //             for (int i = 0; i < numOfYoung; i++){
+    //                 int col = getLocation().getCol() + (rand.nextInt(5) - 3);
+    //                 col = Math.max(Math.min(col, getField().getWidth() - 1), 0);
+    //                 newAnimals.add(new Eagle(getField(), col));
+    //             }
+    //         }
+    //     }
+    // }
+
+    public Animal makeAnimal(boolean randAge, Field field, Location location){
+        Animal eagle = new Eagle(randAge, field, location);
+        return eagle;
     }
 
     @Override
@@ -123,5 +128,11 @@ public class Eagle extends Animal{
     @Override
     protected boolean isAlive(){
         return super.isAlive() && super.getAge() <= MAX_AGE && this.hunger <= EAGLE_FOOD_VALUE;
+    }
+
+    @Override
+    public double getCreationProbability()
+    {
+        return 0.04;
     }
 }

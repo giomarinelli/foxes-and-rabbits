@@ -67,23 +67,9 @@ public class Rabbit extends Animal
     }
 
 
-    /**
-     * Check whether or not this rabbit is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
-     */
-    private void giveBirth(List<Animal> newRabbits)
-    {
-        // New rabbits are born into adjacent locations.
-        // Get a list of adjacent free locations.
-        Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Rabbit young = new Rabbit(false, field, loc);
-            newRabbits.add(young);
-        }
+    public Animal makeAnimal(boolean randAge, Field field, Location location){
+        Animal rabbit = new Rabbit(randAge, field, location);
+        return rabbit;
     }
         
 
@@ -118,5 +104,11 @@ public class Rabbit extends Animal
      */
     protected int getMaxLitterSize(){
         return MAX_LITTER_SIZE;
+    }
+
+    @Override
+    public double getCreationProbability()
+    {
+        return 0.018;
     }
 }

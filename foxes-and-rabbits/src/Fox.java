@@ -126,18 +126,9 @@ public class Fox extends Animal
      * New births will be made into free adjacent locations.
      * @param newFoxes A list to return newly born foxes.
      */
-    private void giveBirth(List<Animal> newFoxes)
-    {
-        // New foxes are born into adjacent locations.
-        // Get a list of adjacent free locations.
-        Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Fox young = new Fox(false, field, loc);
-            newFoxes.add(young);
-        }
+    public Animal makeAnimal(boolean randAge, Field field, Location location){
+        Animal fox = new Fox(randAge, field, location);
+        return fox;
     }
         
 
@@ -164,6 +155,12 @@ public class Fox extends Animal
      */
     protected double getBreedingProbability(){
         return BREEDING_PROBABILITY;
+    }
+
+    @Override
+    public double getCreationProbability()
+    {
+        return 0.2;
     }
 
     /**

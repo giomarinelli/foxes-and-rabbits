@@ -21,6 +21,8 @@ public abstract class Animal
 
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
+
+    private double creationProbability;
     
     /**
      * Create a new animal at location in field.
@@ -169,5 +171,26 @@ public abstract class Animal
             births = rand.nextInt(getMaxLitterSize()) + 1;
         }
         return births;
+    }
+
+    abstract public Animal makeAnimal(boolean randomAge, Field field, Location loc);
+
+    public double getCreationProbability(){
+        
+        return creationProbability;
+    }
+
+    protected void giveBirth(List<Animal> newAnimals)
+    {
+        // New foxes are born into adjacent locations.
+        // Get a list of adjacent free locations.
+        Field field = getField();
+        List<Location> free = field.getFreeAdjacentLocations(getLocation());
+        int births = breed();
+        for(int b = 0; b < births && free.size() > 0; b++) {
+            Location loc = free.remove(0);
+            Animal newAnimal = makeAnimal(false, field, loc);
+            newAnimals.add(newAnimal);
+        }
     }
 }
