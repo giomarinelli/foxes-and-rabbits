@@ -27,15 +27,15 @@ public class Simulator
     private int step;
     // A graphical view of the simulation.
     private SimulatorView view;
-
-    private List<Animal> animalList = new ArrayList<Animal>();
+    //list of animals to be added to animals
+    private List<Animal> addList = new ArrayList<Animal>();
     
     /**
      * Construct a simulation field with default size.
      */
-    public Simulator(List<Animal> animalList)
+    public Simulator(List<Animal> addList)
     {
-        this(DEFAULT_DEPTH, DEFAULT_WIDTH, animalList);
+        this(DEFAULT_DEPTH, DEFAULT_WIDTH, addList);
         
     }
     
@@ -44,9 +44,9 @@ public class Simulator
      * @param depth Depth of the field. Must be greater than zero.
      * @param width Width of the field. Must be greater than zero.
      */
-    public Simulator(int depth, int width, List<Animal> animalList)
+    public Simulator(int depth, int width, List<Animal> addList)
     {
-        this.animalList = animalList;
+        this.addList = addList;
         if(width <= 0 || depth <= 0) {
             System.out.println("The dimensions must be greater than zero.");
             System.out.println("Using default values.");
@@ -133,8 +133,8 @@ public class Simulator
         Random rand = Randomizer.getRandom();
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
-                for(int i = 0; i < animalList.size(); i++){
-                    Animal animal = animalList.get(i);
+                for(int i = 0; i < addList.size(); i++){
+                    Animal animal = addList.get(i);
                     if(rand.nextDouble() <= animal.getCreationProbability()){
                         Location location = new Location(row, col);
                         animals.add(animal.makeAnimal(true, field, location));

@@ -25,12 +25,12 @@ public class Driver {
     }
 
     private static void makeAnimalList() {
-        Field f = new Field(40, 40);
-        Location l = new Location(1, 1);
+        Field tempf = new Field(40, 40);
+        Location templ = new Location(1, 1);
 
-        Animal eagle = new Eagle(true, f, l);
-        Animal fox = new Fox(true, f, l);
-        Animal rabbit = new Rabbit(true, f, l);
+        Animal eagle = new Eagle(true, tempf, templ);
+        Animal fox = new Fox(true, tempf, templ);
+        Animal rabbit = new Rabbit(true, tempf, templ);
 
         animalList.add(eagle);
         animalList.add(fox);

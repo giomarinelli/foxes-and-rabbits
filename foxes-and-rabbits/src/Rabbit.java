@@ -29,7 +29,7 @@ public class Rabbit extends Animal {
     private static final Random rand = Randomizer.getRandom();
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;
     
-    // Individual characteristics (instance fields).
+   
 
     /**
      * Create a new rabbit. A rabbit may be created with age

@@ -89,7 +89,7 @@ public class Fox extends Animal {
         return MAX_LITTER_SIZE;
     }
 
-    // Other methods
+ 
 
     /**
      * This is what the fox does most of the time: it hunts for
