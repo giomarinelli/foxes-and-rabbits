@@ -1,4 +1,5 @@
 import java.util.List;
+import java.awt.Color;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -26,6 +27,8 @@ public class Fox extends Animal
     private static final int RABBIT_FOOD_VALUE = 9;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
+
+    private static final double FOX_CREATION_PROBABILITY = 0.02;
     
 
     // The fox's food level, which is increased by eating rabbits.
@@ -41,7 +44,7 @@ public class Fox extends Animal
      */
     public Fox(boolean randomAge, Field field, Location location)
     {
-        super(field, location);
+        super(field, location, Color.blue, FOX_CREATION_PROBABILITY);
         if(randomAge) {
             super.setAge(rand.nextInt(MAX_AGE));
             foodLevel = rand.nextInt(RABBIT_FOOD_VALUE);
@@ -81,8 +84,6 @@ public class Fox extends Animal
             }
         }
     }
-
-
     
     /**
      * Make this fox more hungry. This could result in the fox's death.
@@ -120,25 +121,7 @@ public class Fox extends Animal
         }
         return null;
     }
-    
-    /**
-     * Check whether or not this fox is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newFoxes A list to return newly born foxes.
-     */
-    private void giveBirth(List<Animal> newFoxes)
-    {
-        // New foxes are born into adjacent locations.
-        // Get a list of adjacent free locations.
-        Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Fox young = new Fox(false, field, loc);
-            newFoxes.add(young);
-        }
-    }
+
         
 
 
@@ -172,6 +155,11 @@ public class Fox extends Animal
      */
     protected int getMaxLitterSize(){
         return MAX_LITTER_SIZE;
+    }
+
+    public Animal makeAnimal(boolean randAge, Field field, Location location){
+        Animal fox = new Fox(randAge, field, location);
+        return fox;
     }
 
 }
