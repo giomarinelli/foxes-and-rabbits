@@ -1,11 +1,16 @@
+/*
+* Eagle.java
+* @author Gio Marinelli, Joe Forte
+* @version  03/18/2024
+*/
 import java.awt.Color;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 public class Eagle extends Animal{
 
+    // Characteristics shared by all eagles (class variables).
     private static final int BREEDING_AGE = 15;
     private static final int MAX_AGE = 250;
     private static final double BREEDING_PROBABILITY = 0.08;
@@ -13,17 +18,18 @@ public class Eagle extends Animal{
     private static final int EAGLE_FOOD_VALUE = 25;
     private static final double EAGLE_CREATION_PROBABILITY = 0.06;
 
-
+    // Individual characteristics (instance variables).
     private int direction = 1;
     private int swoopCountdown = 9;
     private int hunger = 0;
-
     private boolean isSwooped = false;
 
+    // Constructor
     public Eagle(boolean randomAge, Field field, Location location){
         super(field, location, Color.DARK_GRAY, EAGLE_CREATION_PROBABILITY);
     }
 
+    // Overridden methods
     @Override
     public void act(List<Animal> newAnimals) {
         super.incrementAge();
@@ -66,8 +72,8 @@ public class Eagle extends Animal{
         }
     }
 
-    private Location findFood()
-    {
+    // Other methods
+    private Location findFood() {
         int currentCol = getLocation().getCol();
         Field field = getField();
         LinkedList<Location> cells = new LinkedList<Location>();
@@ -88,12 +94,12 @@ public class Eagle extends Animal{
         return null;
     }
 
-
     public Animal makeAnimal(boolean randAge, Field field, Location location){
         Animal eagle = new Eagle(randAge, field, location);
         return eagle;
     }
 
+    // Getters for shared characteristics
     @Override
     protected int getBreedingAge() {
         return BREEDING_AGE;

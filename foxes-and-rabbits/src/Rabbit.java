@@ -1,3 +1,8 @@
+/*
+* Rabbit.java
+* @author Gio Marinelli, Joe Forte
+* @version  03/18/2024
+*/
 import java.awt.Color;
 import java.util.List;
 import java.util.Random;
@@ -9,8 +14,7 @@ import java.util.Random;
  * @author David J. Barnes and Michael KÃ¶lling
  * @version 2011.07.31
  */
-public class Rabbit extends Animal
-{
+public class Rabbit extends Animal {
     // Characteristics shared by all rabbits (class variables).
 
     // The age at which a rabbit can start to breed.
@@ -23,12 +27,9 @@ public class Rabbit extends Animal
     private static final int MAX_LITTER_SIZE = 4;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
-
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;
     
     // Individual characteristics (instance fields).
-    
-
 
     /**
      * Create a new rabbit. A rabbit may be created with age
@@ -38,58 +39,37 @@ public class Rabbit extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Rabbit(boolean randomAge, Field field, Location location)
-    {
+    public Rabbit(boolean randomAge, Field field, Location location) {
         super(field, location, Color.orange, RABBIT_CREATION_PROBABILITY);
         super.setAge(0);
-        if(randomAge) {
+        if (randomAge) {
             super.setAge(rand.nextInt(MAX_AGE));
         }
     }
-    
-    /**
-     * This is what the rabbit does most of the time - it runs 
-     * around. Sometimes it will breed or die of old age.
-     * @param newRabbits A list to return newly born rabbits.
-     */
-    public void act(List<Animal> newRabbits)
-    {
-        super.incrementAge();
-        if(isAlive()) {
-            giveBirth(newRabbits);            
-            // Try to move into a free location.
-            Location newLocation = getField().freeAdjacentLocation(getLocation());
-            if(newLocation != null) {
-                setLocation(newLocation);
-            }
-            else {
-                // Overcrowding.
-                setDead();
-            }
-        }
-    }
+
+    // Getters
 
     /**
-     *  Return the breeding age of this animal. 
-     *  @return The breeding age of this animal.
+     * Return the breeding age of this animal. 
+     * @return The breeding age of this animal.
      */
-    protected int getBreedingAge(){
+    protected int getBreedingAge() {
         return BREEDING_AGE;
     }
 
-        /**
+    /**
      * Return the max age of this animal
      * @return int the max age of this animal
      */
-    protected int getMaxAge(){
+    protected int getMaxAge() {
         return MAX_AGE;
     }
 
-        /**
+    /**
      * Return the breeding probabilty for this rabbit
      * @return the breeding probabilty for this rabbit
      */
-    protected double getBreedingProbability(){
+    protected double getBreedingProbability() {
         return BREEDING_PROBABILITY;
     }
 
@@ -97,11 +77,42 @@ public class Rabbit extends Animal
      * Return the max litter size for this rabbit
      * @return The max litter size for this rabbit
      */
-    protected int getMaxLitterSize(){
+    protected int getMaxLitterSize() {
         return MAX_LITTER_SIZE;
     }
 
-    public Animal makeAnimal(boolean randAge, Field field, Location location){
+    // Other methods
+
+    /**
+     * This is what the rabbit does most of the time - it runs 
+     * around. Sometimes it will breed or die of old age.
+     * 
+     * @param newRabbits A list to return newly born rabbits.
+     */
+    public void act(List<Animal> newRabbits) {
+        super.incrementAge();
+        if (isAlive()) {
+            giveBirth(newRabbits);            
+            // Try to move into a free location.
+            Location newLocation = getField().freeAdjacentLocation(getLocation());
+            if (newLocation != null) {
+                setLocation(newLocation);
+            } else {
+                // Overcrowding.
+                setDead();
+            }
+        }
+    }
+
+    /**
+     * Create a new rabbit.
+     * 
+     * @param randAge Whether the rabbit has a random age or not.
+     * @param field The field the rabbit will be in.
+     * @param location The location of the rabbit.
+     * @return The newly created rabbit.
+     */
+    public Animal makeAnimal(boolean randAge, Field field, Location location) {
         Animal rabbit = new Rabbit(randAge, field, location);
         return rabbit;
     }
